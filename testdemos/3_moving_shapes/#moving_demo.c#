@@ -1,0 +1,39 @@
+#include <msp430.h>
+#include <libTimer.h>
+#include "lcdutils.h"
+#include "lcddraw.h"
+#include "draw_shapes.h"
+#include "switches.h"
+#include "led.h"
+
+// WARNING: LCD DISPLAY USES P1.0.  Do not touch!!! 
+
+#define LED_GREEN BIT6
+#define LED_RED BIT0
+
+char redraw_game = 1;
+
+void main()
+{
+  lcd_init();
+  configureClocks();
+  led_init();
+
+  green_on = 1;
+  led_changed = 1;
+  led_update();
+  
+  switch_p2_init();
+  clearScreen(COLOR_RED);
+  init_rectype();
+  init_player();
+
+  enableWDTInterrupts();
+
+  while (1) {
+    if (redraw_game) {
+      clearScreen(COLOR_RED);
+    }
+  or_sr(0x18);	/**< CPU off , GIE on*/
+  }
+}

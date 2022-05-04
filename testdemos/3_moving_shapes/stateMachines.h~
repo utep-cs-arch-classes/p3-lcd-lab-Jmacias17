@@ -1,0 +1,7 @@
+#ifndef stateMachine_included
+#define stateMachine_inclided
+
+extern int master
+
+/* This funtion advances through the main menu */
+void main_menu_advance();

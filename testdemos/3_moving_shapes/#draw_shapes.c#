@@ -1,3 +1,4 @@
+
 #include <msp430.h>
 #include "lcdutils.h"
 #include "lcddraw.h"
@@ -78,9 +79,9 @@ void
 init_player(void){
   typeCtrl.ready_newtype = 0;
   // vars for the circle
-  cir1.cir_y = screenWidth / 2;
+  cir1.cir_y = 10;
   cir1.cir_x = 10;
-  cir1.old_cir_y = screenWidth / 2;
+  cir1.old_cir_y = 10;
   cir1.old_cir_x = 10;
   cir1.r = 9;
 
@@ -169,15 +170,16 @@ draw_moving_shapes(void)
     // draw and update the rectangle
     moving_rectangle(&rect3);
     break;
-   
   }
-  moving_circle(0);
+    
+  // draw and update the circle
+  moving_circle();
 }
 
 void
 moving_rectangle(rectangle *to_draw)
 {
-  static int x_vel = 20;
+  static int x_vel = 12;
   static int y_vel = 0;
 
   int left_col = to_draw->rect1_col;
@@ -268,9 +270,10 @@ draw_circle(int x, int y, int r, u_int color)
 }
 
 void
-moving_circle(int n)
+moving_circle(void)
 {
-  int y_vel = n;
+  static int x_vel = 0;
+  static int y_vel = 10;
   
   u_int color = COLOR_SIENNA;
 
@@ -282,6 +285,8 @@ moving_circle(int n)
   cir1.old_cir_x = cir1.cir_x;
   cir1.old_cir_y = cir1.cir_y;
 
+  // update position
+  cir1.cir_x += x_vel;
   cir1.cir_y += y_vel;
 
   typeCtrl.random_val = cir1.cir_y;
@@ -297,14 +302,14 @@ moving_circle(int n)
   case 0:
      if( ( (cir1.cir_y + cir1.r) <= rect1.height1 ) &&
 	 ( (cir1.cir_x + cir1.r) >= rect1.rect1_col ) ) {
-       cir1.cir_y = screenWidth / 2;
+       cir1.cir_y = 10;
        cir1.cir_x = 10;
     }
     break;
   case 1:
     if( ( (cir1.cir_y + cir1.r) >= rect2.rect2_row ) &&
 	( (cir1.cir_x + cir1.r) >= rect2.rect2_col ) ) {				     
-      cir1.cir_y = screenWidth / 2;
+      cir1.cir_y = 10;
       cir1.cir_x = 10;
     }
     break;
@@ -313,7 +318,7 @@ moving_circle(int n)
 	  ( (cir1.cir_x + cir1.r) >= rect3.rect1_col ) ) ||
 	( ( (cir1.cir_y + cir1.r) >= rect3.rect2_row ) &&
 	  ( (cir1.cir_x + cir1.r) >= rect3.rect2_col ) ) ) {     
-      cir1.cir_y = screenWidth / 2;
+      cir1.cir_y = 10;
       cir1.cir_x = 10;
     break;
     }

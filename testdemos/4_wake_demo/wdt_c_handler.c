@@ -6,7 +6,7 @@ void wdt_c_handler(void)
   static int secCount = 0;
 
   secCount ++;
-  if (secCount >= 25) {		/* 10/sec */
+  if (secCount >= 87) {		/* 4/sec */
     secCount = 0;
     redrawScreen = 1;
   }

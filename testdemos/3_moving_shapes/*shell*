@@ -1,0 +1,407 @@
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> make all
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o moving_demo.o moving_demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o moving_demo.elf draw_shapes.o wdtInterruptHandler.o led.o p2_c_handler.o switches.o buzzer.o stateMachines.o moving_demo.o -lTimer -lLcd 
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> make load
+msp430loader.sh moving_demo.elf
+check Bus 002 Device 009: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  moving_demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 009
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  484 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c1e4 [section: .rodata2]...
+Writing 2604 bytes at c1e8 [section: .text]...
+Writing    8 bytes at cc14 [section: .data]...
+Done, 3104 bytes total
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> make all
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o moving_demo.o moving_demo.c
+moving_demo.c: In function 'main':
+moving_demo.c:35:2: warning: implicit declaration of function 'clearscreen'; did you mean 'clearScreen'? [-Wimplicit-function-declaration]
+  clearscreen(COLOR_BLACK);
+  ^~~~~~~~~~~
+  clearScreen
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o moving_demo.elf draw_shapes.o wdtInterruptHandler.o led.o p2_c_handler.o switches.o buzzer.o stateMachines.o moving_demo.o -lTimer -lLcd 
+moving_demo.o: In function `main':
+moving_demo.c:(.text+0x42): undefined reference to `clearscreen'
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:15: moving_demo.elf] Error 1
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> make all
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o moving_demo.o moving_demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o moving_demo.elf draw_shapes.o wdtInterruptHandler.o led.o p2_c_handler.o switches.o buzzer.o stateMachines.o moving_demo.o -lTimer -lLcd 
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> make load
+msp430loader.sh moving_demo.elf
+check Bus 002 Device 009: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  moving_demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 009
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  484 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c1e4 [section: .rodata2]...
+Writing 2724 bytes at c1e8 [section: .text]...
+Writing   12 bytes at cc8c [section: .data]...
+Done, 3228 bytes total
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> make all
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o draw_shapes.o draw_shapes.c
+draw_shapes.c: In function 'moving_circle':
+draw_shapes.c:286:17: error: 'x_vel' undeclared (first use in this function); did you mean 'y_vel'?
+   cir1.cir_x += x_vel;
+                 ^~~~~
+                 y_vel
+draw_shapes.c:286:17: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [<builtin>: draw_shapes.o] Error 1
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> make all
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o draw_shapes.o draw_shapes.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o moving_demo.elf draw_shapes.o wdtInterruptHandler.o led.o p2_c_handler.o switches.o buzzer.o stateMachines.o moving_demo.o -lTimer -lLcd 
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> make load
+msp430loader.sh moving_demo.elf
+check Bus 002 Device 009: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  moving_demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 009
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  484 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c1e4 [section: .rodata2]...
+Writing 2698 bytes at c1e8 [section: .text]...
+Writing   10 bytes at cc72 [section: .data]...
+Done, 3200 bytes total
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o draw_shapes.o draw_shapes.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o switches.o switches.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o moving_demo.elf draw_shapes.o wdtInterruptHandler.o led.o p2_c_handler.o switches.o buzzer.o stateMachines.o moving_demo.o -lTimer -lLcd 
+msp430loader.sh moving_demo.elf
+check Bus 002 Device 009: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  moving_demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 009
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  484 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c1e4 [section: .rodata2]...
+Writing 2694 bytes at c1e8 [section: .text]...
+Writing   10 bytes at cc6e [section: .data]...
+Done, 3196 bytes total
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> make load
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o moving_demo.o moving_demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o moving_demo.elf draw_shapes.o wdtInterruptHandler.o led.o p2_c_handler.o switches.o buzzer.o stateMachines.o moving_demo.o -lTimer -lLcd 
+msp430loader.sh moving_demo.elf
+check Bus 002 Device 009: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  moving_demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 009
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  484 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c1e4 [section: .rodata2]...
+Writing 2680 bytes at c1e8 [section: .text]...
+Writing   10 bytes at cc60 [section: .data]...
+Done, 3182 bytes total
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> make all
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o moving_demo.o moving_demo.c
+moving_demo.c: In function 'main':
+moving_demo.c:45:2: error: 'secCount' undeclared (first use in this function)
+  secCount = 0;
+  ^~~~~~~~
+moving_demo.c:45:2: note: each undeclared identifier is reported only once for each function it appears in
+moving_demo.c:56:1: error: expected declaration or statement at end of input
+ }
+ ^
+make: *** [<builtin>: moving_demo.o] Error 1
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> make all
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h   -c -o moving_demo.o moving_demo.c
+msp430-elf-gcc -mmcu=msp430g2553 -Os -I../h -L../lib -L/opt/ti/msp430_gcc/include/  -o moving_demo.elf draw_shapes.o wdtInterruptHandler.o led.o p2_c_handler.o switches.o buzzer.o stateMachines.o moving_demo.o -lTimer -lLcd 
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> make load
+msp430loader.sh moving_demo.elf
+check Bus 002 Device 009: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  moving_demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 009
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at fff4 [section: __interrupt_vector_11]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  484 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c1e4 [section: .rodata2]...
+Writing 2716 bytes at c1e8 [section: .text]...
+Writing   10 bytes at cc84 [section: .data]...
+Done, 3218 bytes total
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> cd..
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos> cd 2_button_demo
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/2_button_demo> make load
+msp430loader.sh button_demo.elf
+check Bus 002 Device 009: ID 0451:f432 Texas Instruments, Inc. eZ430 Development Tool
+Detected ez430 dev kit
+mspdebug rf2500 "prog  button_demo.elf "
+MSPDebug version 0.21 - debugging tool for MSP430 MCUs
+Copyright (C) 2009-2012 Daniel Beer <dlbeer@gmail.com>
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Trying to open interface 1 on 009
+rf2500: warning: can't detach kernel driver: No such file or directory
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+fet: FET returned error code 4 (Could not find device or device not supported)
+fet: command C_IDENT1 failed
+fet: identify failed
+Trying again...
+Initializing FET...
+FET protocol version is 30394216
+Set Vcc: 3000 mV
+Configured for Spy-Bi-Wire
+Sending reset...
+Device ID: 0x2553
+  Code start address: 0xc000
+  Code size         : 16384 byte = 16 kb
+  RAM  start address: 0x200
+  RAM  end   address: 0x3ff
+  RAM  size         : 512 byte = 0 kb
+Device: MSP430G2553/G2403
+Number of breakpoints: 2
+fet: FET returned NAK
+warning: device does not support power profiling
+Chip ID data: 25 53
+Erasing...
+Programming...
+Writing    2 bytes at ffe6 [section: __interrupt_vector_4]...
+Writing    2 bytes at fffe [section: __reset_vector]...
+Writing  486 bytes at c000 [section: .rodata]...
+Writing    4 bytes at c1e8 [section: .rodata2]...
+Writing 1598 bytes at c1ec [section: .text]...
+Writing    4 bytes at c82a [section: .data]...
+Done, 2096 bytes total
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/2_button_demo> cd..
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos> cd 3_moving_shapes
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> ls
+buzzer.c        draw_shapes.o   moving_demo.elf  stateMachines.c~  switches.h
+buzzer.h        led.c           moving_demo.o    stateMachines.h   switches.o
+buzzer.o        led.h           p2_c_handler.c   stateMachines.h~  wdtInterruptHandler.c
+draw_shapes.c   led.o           p2_c_handler.o   stateMachines.o   wdtInterruptHandler.c~
+draw_shapes.c~  Makefile        Readme.md        #switches.c#      wdtInterruptHandler.o
+draw_shapes.h   moving_demo.c   #*shell*#        switches.c
+draw_shapes.h~  moving_demo.c~  stateMachines.c  switches.c~
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> rm -i *switches
+rm: cannot remove '*switches': No such file or directory
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> rm -i *.switches
+rm: cannot remove '*.switches': No such file or directory
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> rm -i switches. c
+rm: cannot remove 'switches.': No such file or directory
+rm: cannot remove 'c': No such file or directory
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> rm switches.c
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> rm switches.c~
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> rm #switches.c#
+rm: missing operand
+Try 'rm --help' for more information.
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> ls
+buzzer.c        draw_shapes.o   moving_demo.elf  stateMachines.c~  wdtInterruptHandler.c
+buzzer.h        led.c           moving_demo.o    stateMachines.h   wdtInterruptHandler.c~
+buzzer.o        led.h           p2_c_handler.c   stateMachines.h~  wdtInterruptHandler.o
+draw_shapes.c   led.o           p2_c_handler.o   stateMachines.o
+draw_shapes.c~  Makefile        Readme.md        #switches.c#
+draw_shapes.h   moving_demo.c   #*shell*#        switches.h
+draw_shapes.h~  moving_demo.c~  stateMachines.c  switches.o
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> rm switches.h
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> rm switches.o
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/3_moving_shapes> cd..
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos> cd 2_button_demo
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/2_button_demo> ls
+button_demo.c    #led.c#  led.h~            p2_asm_handler.s  #switches.c#
+button_demo.c~   led.c    led.o             p2_c_handler.c    switches.c
+button_demo.elf  #led.h#  Makefile          p2_c_handler.o    switches.h
+button_demo.o    led.h    p2_asm_handler.o  Readme.md         switches.o
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/2_button_demo> cp switches.c ~/Documents/lab1/p3-lcd-lab-Jmacias17/3_moving_shapes 
+student@systems-vm:~/Documents/lab1/p3-lcd-lab-Jmacias17/testdemos/2_button_demo> cp switches.h ~/Documents/lab1/p3-lcd-lab-Jmacias17/3_moving_shapes 
