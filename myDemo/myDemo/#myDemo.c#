@@ -12,7 +12,7 @@ void main()
 {
   buzzer_init();
   buzzer_set_period(1000); /* inititate the Buzzer Start Up */
-  P1DIR |= LED;		/**< Led on when CPU Starts Up */
+  P1DIR |= LED;		   /**< Led on when CPU Starts Up */
   P1OUT |= LED;
   configureClocks();
   lcd_init();
@@ -28,10 +28,11 @@ void main()
     if (redrawScreen) {                     /* Time is set to redrawScreen */
       switch (master) {                     /* Program displays depending on state */
       case 0:                               /* Intro State */
-	redrawScreen = 0;
-	if(redrawScreen2) {  /* Reset Screen Once */
+	redrawScreen = 0;                   /* Turns off LCD redraw */
+	if(redrawScreen2) {                 /* Reset Screen Only Once Enter MasterState 0 */
 	  clearScreen(COLOR_BLACK);
-	  redrawScreen2 = 0;
+	  redrawScreen2 = 0;                /* Turns off special redraw *//
+	  seconds = 0;
 	}
 	splashScreen();
 	break;
@@ -40,6 +41,7 @@ void main()
 	if(redrawScreen2) {                  /* Start Game */
 	  resetGame();                     /* Reset Game Settings */
 	  redrawScreen2 = 0;
+	  seconds = 0;
 	}
 
 	if(switchState == 1) {
@@ -51,6 +53,7 @@ void main()
 	if(redrawScreen2) {
 	  clearScreen(COLOR_BLACK);
 	  redrawScreen2 = 0;
+	  seconds = 0;
 	}
 	gameOver();
 	break;

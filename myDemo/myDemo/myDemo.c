@@ -32,6 +32,7 @@ void main()
 	if(redrawScreen2) {  /* Reset Screen Once */
 	  clearScreen(COLOR_BLACK);
 	  redrawScreen2 = 0;
+	  seconds = 0;
 	}
 	splashScreen();
 	break;
@@ -40,6 +41,7 @@ void main()
 	if(redrawScreen2) {                  /* Start Game */
 	  resetGame();                     /* Reset Game Settings */
 	  redrawScreen2 = 0;
+	  seconds = 0;
 	}
 
 	if(switchState == 1) {
@@ -51,6 +53,7 @@ void main()
 	if(redrawScreen2) {
 	  clearScreen(COLOR_BLACK);
 	  redrawScreen2 = 0;
+	  seconds = 0;
 	}
 	gameOver();
 	break;

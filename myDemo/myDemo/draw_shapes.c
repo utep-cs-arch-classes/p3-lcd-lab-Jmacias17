@@ -1,12 +1,22 @@
 #include "draw_shapes.h"
+
 #include "switches.h"
 #include "stateMachines.h"
+#include "buzzer.h"
 
 // global vars for the rectangle
-ctrlType typeCtrl;
-rectangle rect1;
+ctrlType typeCtrl;   /* Controls the type of Tube */
+rectangle rect1;     /* The 3 Tube Type default coordinates will be stored and used in each */
 rectangle rect2;
 rectangle rect3;
+
+
+player player1;      /* The Player sprite */
+int playerSkin;
+int score = 0;       /* Keeps track of the score */
+int twiceRepeat = 0; /* if a rectangle has repeated twice turns on */
+int tempVal = 0;     /* a random variable.
+
 /* int rect_row, rect_col; */
 /* int old_rect_row, old_rect_col; */
 /* u_char height, width; */
@@ -15,19 +25,20 @@ rectangle rect3;
 /* int cir_y, cir_x; */
 /* int old_cir_y, old_cir_x; */
 /* int r; */
-circle cir1;
-u_int background_color = COLOR_BLUE;
+circle cir1;                           /* Current player */
+u_int background_color = COLOR_BLUE;   /* background color */  
 
 void
-init_rectype(void)
+init_rectype(void)                     /* Imitialize rectange types default coords. */
 {
-  typeCtrl.ready_newtype = 0;
+  typeCtrl.ready_newtype = 0;          /* Not ready for a new rectangle type */
+  
   // vars for the top piece in rectangle1
   rect1.rect1_row = 0;
   rect1.rect1_col = screenWidth - 1;
   rect1.old_rect1_row = 0;
   rect1.old_rect1_col = screenWidth -1;
-  rect1.height1 = 100;
+  rect1.height1 =  ((tempVal * score) % 50) + 70;
   rect1.width1  = 20;
 
   // vars for the bottom piece in rectangle1
@@ -47,11 +58,11 @@ init_rectype(void)
   rect2.width1  = 0;
 
   // vars for the bottom piece in rectangle2
-  rect2.rect2_row = 60;
+rect2.rect2_row = ((cir1.cir_y * score) % 40) + 60;
   rect2.rect2_col = screenWidth - 1;
-  rect2.old_rect2_row = 60;
+  rect2.old_rect2_row = ((0 * score) % 40) + 60;
   rect2.old_rect2_col = screenWidth -1;
-  rect2.height2 = 100;
+  rect2.height2 = screenHeight - rect2.rect2_row;
   rect2.width2  = 20;
 
    // vars for the top piece in rectangle3
@@ -59,34 +70,43 @@ init_rectype(void)
   rect3.rect1_col = screenWidth - 1;
   rect3.old_rect1_row = 0;
   rect3.old_rect1_col = screenWidth -1;
-  rect3.height1 = 50;
+  rect3.height1 = ((tempVal * score) % 60) + 40;
   rect3.width1  = 20;
 
-  // vars for the second piece in rectangle2
-  rect3.rect2_row = 110;
+  // vars for the second piece in rectangle3
+  rect3.rect2_row = rect3.height1 + ((tempVal * score) % 20) + 45;
   rect3.rect2_col = screenWidth - 1;
-  rect3.old_rect2_row = 100;
+  rect3.old_rect2_row = rect3.rect1_row + ((tempVal * score) % 20) + 45;
   rect3.old_rect2_col = screenWidth -1;
-  rect3.height2 = 50;
-  rect3.width2  = 20;
+  rect3.height2 = screenHeight - rect3.rect2_row;
+  rect3.width2 = 20;
 }
 
 void
-init_player(void){
-  typeCtrl.ready_newtype = 0;
-  // vars for the circle
+init_player(void){           /* Sets players default coords. */
+  /* Vars for the player */
+  player1.curr_x = 1;
+  player1.curr_y = screenWidth / 2;
+  player1.old_x = 1;
+  player1.old_y = screenWidth/2;
+  player1.width = 10;
+  player1.height = 10;
+  
+  // vars for the circle             */ Current Player */
   cir1.cir_y = screenWidth / 2;
   cir1.cir_x = 10;
   cir1.old_cir_y = screenWidth / 2;
   cir1.old_cir_x = 10;
   cir1.r = 9;
 
+
+  /* Rectangle type starts at type 0 and doesn't need a new one yet. */
   typeCtrl.curr_type = 0;
   typeCtrl.ready_newtype = 0;
 }
 
 void
-displayBackground(void){
+displayBackground(void){             /* Displays Various Clouds */
   displayCloud(20,20);
   displayCloud(100,20);
   displayCloud(50, 40);
@@ -96,12 +116,11 @@ displayBackground(void){
 
 void
 displayCloud(int x, int y){
-
+  /* Pixel art for a cloud */
   u_int cloudcolor1 = COLOR_WHITE;
-  u_int cloudcolor2 = '0xd9ec';
-  u_int cloudcolor3 = '0xbfcb';
+  u_int cloudcolor2 = '0xd9e';
+  u_int cloudcolor3 = '0xbfc';
 
-  drawRectOutline(x, y, 21, 12, background_color);
   //First ROW
   fillRectangle(x + 9, y, 3, 1, cloudcolor1);
   //Second ROW
@@ -161,14 +180,44 @@ displayCloud(int x, int y){
 void
 draw_moving_shapes(void)
 {
-  int i = typeCtrl.curr_type;
-  
-  if(typeCtrl.ready_newtype == 1) {
-    i = ((typeCtrl.random_val * typeCtrl.curr_type) + 1) % 3;
-    typeCtrl.curr_type = i;
-    typeCtrl.ready_newtype = 0;
+  if(typeCtrl.ready_newtype == 1) {       /* If ready for a new rectangle type */
+                                          /* tempVal = the next rectangle type */
+    tempVal = ((typeCtrl.random_val * typeCtrl.curr_type) + score) % 3;
+    if (tempVal == typeCtrl.curr_type) {  /* The rectangle new type will be the same as before */
+      twiceRepeat += 1;                   /* Increase the repeated rectangle type count */
+    } else if (twiceRepeat == 2) {        /* rectangle type repeated three times reset */
+      typeCtrl.curr_type = (typeCtrl.curr_type + 1) % 3;
+      twiceRepeat = 0;                    /* reset twice repeat to 0 */
+    } else {
+      typeCtrl.curr_type = tempVal;       /* curr type is set to the random value */
+    }
+    typeCtrl.ready_newtype = 0;           /* no longer ready for a new rectangle type */
   }
   
+  displayBackground();                    /* Print cloud background */
+  
+  switch (typeCtrl.curr_type) {           /* Based on which rectangle type */
+  case 0:
+    // draw and update the rectangle
+    moving_rectangle(&rect1);
+    break;
+  case 1:
+    // draw and update the rectangle
+    moving_rectangle(&rect2);
+    break;
+  case 2:
+    // draw and update the rectangle
+    moving_rectangle(&rect3);
+    break;
+   
+  }
+  moving_circle(0); /* Moves the player in stall position */
+}
+
+void
+moving_rectangle(rectangle *to_draw)
+{
+   
   //Defaults
   int left_col= 0;
   int top_row = 0;
@@ -181,7 +230,7 @@ draw_moving_shapes(void)
   int width2 = 0;
 
   /* Manage the Rectangle Type Displayed */
-  switch(i) {
+  switch(typeCtrl.curr_type) {
   case 0:
     left_col = rect1.old_rect1_col;
     top_row  = rect1.old_rect1_row;
@@ -223,36 +272,13 @@ draw_moving_shapes(void)
   fillRectangle(left_col, top_row, width, height, background_color);
   //blank out the old bottom piece of rectangle
   fillRectangle(left_col2, top_row2, width2, height2, background_color);
-  displayBackground();
-  
-  switch (i) {
-  case 0:
-    // draw and update the rectangle
-    moving_rectangle(&rect1);
-    break;
-  case 1:
-    // draw and update the rectangle
-    moving_rectangle(&rect2);
-    break;
-  case 2:
-    // draw and update the rectangle
-    moving_rectangle(&rect3);
-    break;
-   
-  }
-  moving_circle(0);
-}
-
-void
-moving_rectangle(rectangle *to_draw)
-{
   static int x_vel = 15;
   static int y_vel = 0;
 
-  int left_col = to_draw->rect1_col;
-  int top_row  = to_draw->rect1_row;
-  int left_col2 = to_draw->rect2_col;
-  int top_row2 = to_draw->rect2_row;
+  left_col = to_draw->rect1_col;
+  top_row  = to_draw->rect1_row;
+  left_col2 = to_draw->rect2_col;
+  top_row2 = to_draw->rect2_row;
   
   unsigned int blue = 16, green = 0, red = 31;
   unsigned int color = (blue << 11) | (green << 5) | red;
@@ -270,15 +296,23 @@ moving_rectangle(rectangle *to_draw)
   to_draw->rect1_col -= x_vel;
   to_draw->rect2_row += y_vel;
   to_draw->rect2_col -= x_vel;
-  
 
+  /* If either the top or bottom of the rectangle hit the left screen reset */
   if ( (to_draw->rect1_col ) <= -15 ||
-       (to_draw->rect2_col ) <= -15) { 
+       (to_draw->rect2_col ) <= -15) {
+    
+    /* Set a sound for score! */
+    buzzer_set_period(2000);
+    
     // Set to Original Values.
     fillRectangle(to_draw->old_rect1_col, to_draw->old_rect1_row, to_draw->width1, to_draw->height1, background_color);
     fillRectangle(to_draw->old_rect2_col, to_draw->old_rect2_row, to_draw->width2, to_draw->height2, background_color);
+
+    /* score increase! */
+    score+= 1;
     init_rectype();
     typeCtrl.ready_newtype = 1;
+    buzzer_set_period(0);
   }
 }
 
@@ -374,27 +408,48 @@ void hit_detection(void){
     cir1.cir_y = 140;
   }
 
-  switch(typeCtrl.curr_type) {
-  case 0:
-     if( ( (cir1.cir_y + cir1.r) <= rect1.height1 ) &&
+  switch(typeCtrl.curr_type) {                               /* Player Lost */
+  case 0:                                                    /* Per Rectangle Type */              
+    if( ( (cir1.cir_y - cir1.r) <= rect1.height1 ) &&       /* If hit the edges */
 	 ( (cir1.cir_x + cir1.r) >= rect1.rect1_col ) ) {
-       nextState = 1;
+      gameOverNote();                                       /* game over noise */
+      if (score > highScore) {                             /* Set highScorw */
+	 highScore = score;
+       }
+       score = 0;
+       master = 2;
+       redrawScreen2 = 1;
+       switchState = 2;
     }
     break;
   case 1:
     if( ( (cir1.cir_y + cir1.r) >= rect2.rect2_row ) &&
 	( (cir1.cir_x + cir1.r) >= rect2.rect2_col ) ) {
-      nextState = 1;
+      gameOverNote();
+      if (score > highScore) {
+	 highScore = score;
+       }
+       score = 0;
+       master = 2;
+       redrawScreen2 = 1;
+       switchState = 2;
     }
     break;
   case 2:
-    if( ( ( (cir1.cir_y + cir1.r) <= rect3.height1 ) &&
+    if( ( ( (cir1.cir_y - cir1.r) <= rect3.height1 ) &&
 	  ( (cir1.cir_x + cir1.r) >= rect3.rect1_col ) ) ||
 	( ( (cir1.cir_y + cir1.r) >= rect3.rect2_row ) &&
 	  ( (cir1.cir_x + cir1.r) >= rect3.rect2_col ) ) ) {     
-      nextState = 1;
-    break;
+      gameOverNote();
+      if (score > highScore) {
+	 highScore = score;
+       }
+       score = 0;
+       master = 2;
+       redrawScreen2 = 1;
+       switchState = 2;
     }
+    break;
   }
 }
   

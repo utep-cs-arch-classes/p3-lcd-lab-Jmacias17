@@ -5,6 +5,7 @@
 #include <lcdutils.h>
 #include "lcddraw.h"
 #include "switches.h"
+#include "buzzer.h"
 
 typedef struct rect_st {
   int rect1_row;
@@ -23,6 +24,15 @@ typedef struct rect_st {
   int ready_newtype;
 } rectangle;
 
+typedef struct play_st {
+  int curr_x;
+  int curr_y;
+  int old_x;
+  int old_y;
+  u_char height;
+  u_char width;
+} player;
+
 typedef struct ctrl_st {
   int ready_newtype;
   int curr_type;
@@ -37,7 +47,7 @@ typedef struct cir_st {
   int r;
 } circle;
 
-
+extern int score;
 extern u_int background_color;
 
 /* initializes rectangle type values*/
