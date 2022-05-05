@@ -1,0 +1,35 @@
+#include "draw_shapes.h"
+#include "stateMachines.h"
+
+
+/* the interupt handler for the watchdog timer */
+void wdt_c_handler(void)
+{
+  /* Time Variables */
+  static int secCount = 0;
+  static int seconds = 0;
+  static int eventCount = 0;
+
+  /* Updates Values */
+  secCount ++;
+  eventCount ++;
+
+  /* Check to redraw screen */
+  if (eventCount >= 75) {
+    redrawScreen = 1;
+    eventCount = 0;
+  }
+
+  /* Measure Seconds Elapsed */
+  if (secCount >= 250) {
+    seconds++;/* 1 Second has passed */
+    secCount = 0;
+  }
+
+  /* Intro Startup Done After 5 Seconds */
+  if (seconds == 5 && master == 0) {
+    seconds = 0;
+    nextState = 1;
+  }
+}
+  
