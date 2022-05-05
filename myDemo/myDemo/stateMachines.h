@@ -13,6 +13,9 @@ extern short redrawScreen2; /* Controls if the special event needs to be redrawn
 /* This function is used to displayText */
 void displayText();
 
+/* This function is used to display a Splash Screen */
+void splashScreen(void);
+
 /* This function is the introScreen State */
 void introScreen();
 

@@ -362,6 +362,8 @@ moving_circle(int n)
     cir1.cir_y += y_vel;
   }
   typeCtrl.random_val = cir1.cir_y;
+
+  hit_detection();
   
 }
 
