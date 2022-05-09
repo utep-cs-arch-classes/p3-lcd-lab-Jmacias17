@@ -16,6 +16,7 @@ int nextState = 0;       /* Controls if needed to go to the next_state */;
 int resetState= 0;        /* Controls if game needs to be reset */
 int textState = 0;       /* Controls which text state to display */
 int switchState = 0;     /* Controls the state of the switches */
+
 int seconds = 0;         /* Controls the elapsed seconds */
 int highScore = 0;       /* Current High Score */
 
@@ -98,18 +99,37 @@ displayText(void) {
     drawString5x7(40, 40, "JESUS M.", COLOR_WHITE, COLOR_BLACK);
     break;
   case 1:
-    drawString5x7(30, 40, "TO PLAY", COLOR_WHITE, COLOR_BLACK);
-    drawString5x7(10, screenHeight/2, "PRESS ANY SWITCH", COLOR_WHITE, COLOR_BLACK);
-    
-    break;
+    if(switchState == 0) {
+      drawString5x7(20, 40, "CHOOSE A SKIN", COLOR_WHITE, COLOR_BLACK);
+      drawString5x7(10, screenHeight/2, "PRESS SW1 TO CYCLE", COLOR_WHITE, COLOR_BLACK);
+      drawString5x7(2, screenHeight/2 + 15, "PRESS SW2 TO CONFIRM", COLOR_WHITE, COLOR_BLACK);
+    } else if (switchState == 1) {
+      drawString5x7(5, 80, "PRESS ANY SW TO PLAY", COLOR_WHITE, COLOR_BLACK);
+    }
+      break;
   case 2:
-    drawString5x7(30, 40, "GAME OVER", COLOR_WHITE, COLOR_BLACK);
-    displayScore(50, screenHeight/2 - 14, highScore, COLOR_BLACK);
-    drawString5x7(28, screenHeight/2 - 26, "HIGH SCORE", COLOR_WHITE, COLOR_BLACK);
-    if(nextState == 1 && switchState == 2) {
+    //BEGINNER 
+    break;
+  case 3:
+    //Display Current Score
+    displayScore(50, screenHeight/2 - 14, score, COLOR_BLACK);
+    drawString5x7(28, screenHeight/2 - 26, "YOUR SCORE", COLOR_WHITE, COLOR_BLACK);
+
+    //If Delay Time has Passed
+    if(nextState == 1 && switchState == 0) {
+      //Turn off Buzzer
       buzzer_set_period(0);
+
+      //Fill and Replace Text Areas
+      fillRectangle(30,40,56,7,COLOR_BLACK);
+      drawString5x7(28, screenHeight/2 - 56, "HIGH SCORE", COLOR_WHITE, COLOR_BLACK);
+
+      displayScore(50, screenHeight/2 - 45, highScore, COLOR_BLACK);
+
       drawString5x7(10, screenHeight/2, "PRESS ANY SWITCH", COLOR_WHITE, COLOR_BLACK);
       drawString5x7(30, screenHeight/2 + 12, "TO RESTART", COLOR_WHITE, COLOR_BLACK);
+    } else {
+      drawString5x7(30, 40, "GAME OVER", COLOR_WHITE, COLOR_BLACK);
     }
     break;
   }
@@ -127,51 +147,45 @@ splashScreen(void){
     textState = 1;
   }
 }
-
 void
 introScreen(void) {
-  if(redrawScreen2 == 1) {
-    clearScreen(COLOR_BLACK);
-    redrawScreen2 = 0;
+  buzzer_set_period(0);
+  seconds = 0;
+  if(switches && switchState == 1) {     /* If switches pressed and switch state 1 then start */
+    redrawScreen2 = 1;                   /* triggers the screen to reset in next master state*/
+    master = 2;                          /* Start Game */
+    switchState = 0;                     /* switches go back to 0 */
+    textState = 2;                       /* Text state changes */
+  } else {
+    displayText();
+    chooseSkin();                        /* Else display Choose Skin! */
+    if (switches & SW2) {
+      switchState = 1;
+      redrawScreen2 = 1;
+    }
   }
-  
-  if((switch1_down | switch2_down | switch3_down | switch4_down) & switchState == 0) {     /* If switches pressed and s0 then start */
-	  redrawScreen2 = 1;                 /* Start Game */
-	  switchState = 1;
-	  textState = 2;                     /* Switches are now used for Game */
-	} else if (switchState == 0){                             /* Else display Press to Play! */
-	  displayText();
-   }
-  }
-
+}
+ 
 void
 playGame(void){
-    displayScore(65, 10, score, background_color);
-    draw_moving_shapes();
-    if (switches & SW1) {
-      moving_circle(10);
-    } else if (switches & SW2) {
-      moving_circle(-10);
-    }
-    hit_detection();
+  draw_moving_game();
 }
 
 void
 resetGame(void){
-  init_rectype();
   init_player();
-  clearScreen(background_color);
 }
+
 void
 gameOver(void){
-  if((switch1_down | switch2_down | switch3_down | switch4_down) && switchState == 2 && nextState == 1) {     /* If switches pressed and s2 then start */
-	  redrawScreen2 = 1;
-	  master = 1;
-	  nextState = 0;
-	  /* RESTART GAME */
-	  switchState = 0;
-	  textState = 1;                     /* Switches are now used for Game */
-	} else if (switchState == 2){                             /* Else display Press to Play! */
-	  displayText();
+  /* If switches pressed and next state = 1 then start and make noise */
+  if((switch1_down | switch2_down | switch3_down | switch4_down) && nextState == 1) {
+    redrawScreen2 = 1;  /* Ready to refresh screen */
+    master = 1;         /* Back to character selection */
+    nextState = 0;      /* RESTART GAME */
+    textState = 1;      /* Sets the Text State for Intro */
+    switchState = 0;    /* Sets the Switch State for Intro */
+  } else {              /* Else display Press to Play! */
+    displayText();
    }
 }

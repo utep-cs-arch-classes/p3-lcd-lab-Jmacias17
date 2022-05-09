@@ -29,7 +29,6 @@ void buzzer_set_period(short cycles) /* buzzer clock = 2MHz.  (period of 1k resu
 void gameOverNote(void) {
    buzzer_set_period(3000);
    buzzer_set_period(6000);
-   buzzer_set_period(9000);
 }
 
     
